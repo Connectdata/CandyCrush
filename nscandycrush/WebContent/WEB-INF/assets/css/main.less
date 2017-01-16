@@ -1,0 +1,264 @@
+@root:"/sakafomalagasy/";
+
+@darkPrimary:#5D4037;
+@primary:#795548;
+@text:#FFFFFF;
+@accent:#FF5252;
+@primaryText:#212121;
+@secondaryText:#727272;
+@divider:#B6B6B6;
+@error:#D32F2F;
+@sakafo:#593E26;
+
+@img:"@{root}img/";
+@loader:"@{img}loader.GIF";
+@background:"@{img}bg.jpg";
+
+@fonts:"@{root}fonts/";
+@font-text:"Tahoma";
+@font-title:"Poetsen";
+@font-subtitle:"Lato-Black";
+
+
+@font-face{
+	font-family:"Lato";
+	src:url("@{fonts}Lato.ttf");
+}
+@font-face{
+	font-family:"Lato-Black";
+	src:url("@{fonts}Lato-Black.ttf");
+}
+@font-face{
+	font-family:"Poetsen";
+	src:url("@{fonts}Poetsen.ttf");
+}
+body{
+	font-family:@font-text;
+	color:@primaryText;
+	background-image: url(@background);
+	background-position:center center;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-size:cover;
+	height:inherit;
+	margin-top:140px;
+}
+.highlight{
+	border:solid 3px @error;
+}
+.disabled{
+	cursor:not-allowed;
+}
+.enabled{
+	cursor:pointer;
+}
+#login{	
+	padding-top:20px;
+	padding-bottom:20px;
+	width:400px;
+	min-height:250px;
+	border:solid 3px black;
+	border-left:none;
+	border-right:none;
+}
+form{
+	padding-top:20px;
+	padding-bottom:20px;
+}
+#operator{
+	width:400px;
+	height:100px;
+	margin-top:25px;
+}
+.logo{
+	width:100px;
+	height:100px;
+}
+.brand{
+	width:100%;
+	height:100%;
+	vertical-align:middle;
+	margin-top:15px;
+	margin-left:50px;
+}
+h1.mine,h3.mine{
+	padding:0px;
+	margin:0px;
+}
+.btn-login{
+	width:100%;
+	background-color:black;
+	color:white;
+}
+.form-control.custom,.custom{
+	border:none;
+	border-radius:15px 15px;
+	height:34px;
+}
+.form-control.highlight{
+	border:solid 3px #404040;
+}
+.sakafo{
+	width:400px;
+}
+.navbar{
+	font-family:@font-title;
+	color:@secondaryText;
+}
+
+.navbar-right{
+	padding-right:25px;
+}
+.fa-stack{
+	color:@sakafo;
+}
+.navbar.navbar-default.navbar-fixed-top{
+	vertical-align:middle;
+	max-height:140px;
+	border-bottom:solid 5px @darkPrimary;
+}
+.menu-icon{
+	width:75px;
+	height:75px;
+	display:inline;
+	margin-right:10px;
+	margin-top:2px;
+}
+.menu-text{
+	color:@primaryText;
+}
+.navbar-header{
+	width:140px;
+}
+ul>li{
+	list-style-type:none;
+	padding-top:5px;
+	padding-bottom:5px;
+}
+#dropMeal,#dropBonus,#dropMOTD,#dropGift,#dropAchievement,#dropNotif{
+	margin-top:-4px;
+	border:solid 5px @darkPrimary;
+	border-top:solid 5px white;
+	background-color:@primary;
+	color:@text;
+	border-radius:5px 5px;
+	min-height:55px;
+	padding-left:20px;
+	padding-right:20px;
+}
+.float-left{
+	float:left;
+}
+.float-right{
+	float:right;
+}
+
+#meal{
+	min-height:200px;
+	border-radius:5px;
+	margin-bottom:25px;
+	margin-top:10px;
+}
+b{
+	display:block;
+}
+.custom-badge{
+	background-color:@darkPrimary;
+	position:absolute;
+	margin-left:40px;
+	margin-top:2px;
+	min-height:20px;
+	border-radius:20px;
+	font-size:15px;
+	padding:5px;
+	color:white;
+	font-family:@font-subtitle;
+}
+.panel-default>.panel-heading{
+	background-color:@primary;
+	color:white;
+	border-color:@darkPrimary;
+}
+.meal-label>center>input{
+	visibility:hidden;
+	position:absolute;
+}
+.meal-label>center > input + img{ 
+  cursor:pointer;
+  border:2px solid transparent;
+}
+.meal-label>center > input:checked + img{ 
+  cursor:pointer;
+  border:2px solid @primary;
+  border-radius:25px;
+}
+.hide{
+	visibility:hidden;
+}
+#calendar{
+	min-width:700px;
+	margin:0 auto;
+	float:none;
+}
+#day{
+	float:none;
+	min-width:100px;
+	min-height:100px;
+}
+.day-number{
+	position:absolute;
+	top:0;
+	right:0;
+}
+.disabled{
+	
+}
+.img-calendar{
+	width:100px;
+	height:100px;
+}
+.calendar-badge{
+	background-color:@darkPrimary;
+	position:absolute;
+	min-height:20px;
+	border-radius:20px;
+	font-size:15px;
+	padding:5px;
+	color:white;
+	font-family:@font-subtitle;
+}
+.none{
+	min-width:100px;
+	min-height:100px;
+	max-width:100px;
+	max-height:100px;
+	width:100px;
+	height:100px;
+	display:inline;
+}
+div.bonus{
+	display:inline;
+	height:300px;
+	max-width:300px;
+	text-align:center;
+}
+b.bonus{
+	max-width:120px;
+	margin:0 auto;
+}
+
+#activityChart{
+	height:450px;
+	background-color:white;
+}
+#bonusChart{
+	height:450px;
+	background-color:white;
+}
+span.menu-title{
+	font-size:15px;
+	display:block;
+	text-align:center;
+}
+@media(max-width:1600px){
+}
