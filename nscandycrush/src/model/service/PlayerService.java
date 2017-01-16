@@ -1,5 +1,6 @@
 package model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +86,7 @@ public class PlayerService
 	
 	public List<BestScore> getTopBestPlayer(int limittop)
 	{
-		List resp =null;
+		List resp = new  ArrayList<>();
 		
 		String query = "";
 		
@@ -117,7 +118,7 @@ public class PlayerService
 	
 	public BestScore getPlayerBestScore(long idPlayer)
 	{
-		BestScore resp = null;
+		BestScore resp = new BestScore();
 		
 		
 		try
@@ -126,6 +127,8 @@ public class PlayerService
 			condition.setIdPlayer(idPlayer);
 			try
 			{
+				
+				resp =(BestScore) getDAO().findBy(condition).get(0);
 				
 			}
 			catch(Exception e)
@@ -139,6 +142,31 @@ public class PlayerService
 			e.printStackTrace();
 		}
 		
+		
+		
+		
+		return resp;
+	}
+	
+	public Player addPlayerPoint(long idplayer,int toadd)
+	{
+		Player resp = null;
+		
+		try
+		{
+			Player p = new Player();
+			p.setIdPlayer(idplayer);
+			
+			p = (Player)getDAO().findBy(p).get(0);
+			
+			p.setPoint(p.getPoint()+toadd);
+			getDAO().update(p);
+			resp = p;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		
 		

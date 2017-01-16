@@ -71,7 +71,7 @@ public class DateHelper {
 	
 	
 	public static Date getDate(String date) throws ParseException{
-	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    return format.parse(date);
 	    
 	}

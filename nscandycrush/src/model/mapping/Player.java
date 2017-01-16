@@ -22,26 +22,7 @@ public class Player extends HibernateModel {
 	private String login;
 	private String password;
 	private Integer point;
-	public Player(Long idPlayer, String nom, String prenom, String email, String telephone, String login,
-			String password, Integer point) {
-		super();
-		this.idPlayer = idPlayer;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.email = email;
-		this.telephone = telephone;
-		this.login = login;
-		this.password = password;
-		this.point = point;
-	}
-	public Player() {
-		super();
-	}
-	@Override
-	public String toString() {
-		return "Player [idPlayer=" + idPlayer + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
-				+ ", telephone=" + telephone + ", login=" + login + ", password=" + password + ", point=" + point + "]";
-	}
+	private String idFacebook;
 	public Long getIdPlayer() {
 		return idPlayer;
 	}
@@ -90,6 +71,38 @@ public class Player extends HibernateModel {
 	public void setPoint(Integer point) {
 		this.point = point;
 	}
+	public String getIdFacebook() {
+		return idFacebook;
+	}
+	public void setIdFacebook(String idFacebook) {
+		this.idFacebook = idFacebook;
+	}
+	public Player(Long idPlayer, String nom, String prenom, String email, String telephone, String login,
+			String password, Integer point, String idFacebook) {
+		super();
+		this.idPlayer = idPlayer;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.login = login;
+		this.password = password;
+		this.point = point;
+		this.idFacebook = idFacebook;
+	}
+	public Player() {
+		super();
+	}
+	@Override
+	public String toString() {
+		return "Player [idPlayer=" + idPlayer + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email
+				+ ", telephone=" + telephone + ", login=" + login + ", password=" + password + ", point=" + point
+				+ ", idFacebook=" + idFacebook + "]";
+	}
+	
+	
+	
+	
 	
 	
 	

@@ -21,7 +21,7 @@ public class Session extends HibernateModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idSession;
 	private Long idPlayer;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	
 	private Integer score;
