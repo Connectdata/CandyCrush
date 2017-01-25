@@ -1,8 +1,11 @@
 package common.model.dao;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.hibernate.Criteria;
@@ -13,6 +16,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -32,14 +37,14 @@ public class HibernateDAO
     {
         this.sessionFactory = sessionFactory;
     }
-    public List<HibernateModel>findBy(HibernateModel model){
-        Session session=null;
-        List<HibernateModel>list=new ArrayList<HibernateModel>();
-        session=getSessionFactory().getCurrentSession();
-        Criteria crit=session.createCriteria(model.getClass()).add(Example.create(model));
-        list=crit.list();
-        return list;
-    }
+//    public List<HibernateModel>findBy(HibernateModel model){
+//        Session session=null;
+//        List<HibernateModel>list=new ArrayList<HibernateModel>();
+//        session=getSessionFactory().getCurrentSession();
+//        Criteria crit=session.createCriteria(model.getClass()).add(Example.create(model));
+//        list=crit.list();
+//        return list;
+//    }
     
     public List<HibernateModel>findBy(HibernateModel model,String SQLrestriction){
         Session session=null;
@@ -113,6 +118,17 @@ public class HibernateDAO
         list=session.createSQLQuery(query).addEntity(model.getClass()).list();
         return list;
     }
+    
+    
+    
+    public List<Map<String,Object>> executeQuery2(String query){
+        Session session=null;
+        List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+        session=getSessionFactory().getCurrentSession();
+        list=session.createSQLQuery(query).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP).list();
+        return list;
+    }
+    
     public List<Object[]>executeQuery(String query){
         Session session=null;
         List<Object[]>list=new ArrayList<Object[]>();
@@ -186,51 +202,51 @@ public class HibernateDAO
     
     
     
-//    public List<HibernateModel> findBy(HibernateModel model)
-//    {
-//    	List<HibernateModel> rep = null;
-//    	
-//    	Class classe = model.getClass();
-//    	Field [] fields = classe.getDeclaredFields();
-//    	
-//    	HashMap<String, Object> listFields = new HashMap<>();
-//    	
-//    	for(Field f:fields)
-//    	{
-//    		try
-//			{
-//    			f.setAccessible(true);
-//    			if(f.get(model) != null)
-//    			{
-//    				listFields.put(f.getName(), f.get(model));
-//    			}
-//				
-//			} 
-//    		catch (Exception e)
-//			{
-//				
-//				e.printStackTrace();
-//			} 
-//    	}
-//    	
-//    	Session session = getSessionFactory().getCurrentSession();
-//    	try
-//    	{
-//    		Criteria crit = session.createCriteria(classe);
-//    		 crit.add(Restrictions.allEq(listFields));
-//    		
-//    		rep = crit.list();
-//    	}
-//    	catch(Exception e)
-//    	{
-//    		e.printStackTrace();
-//    	}
-//    	
-//    	 
-//    	
-//    	return rep;
-//    	
-//    }
+    public List<HibernateModel> findBy(HibernateModel model)
+    {
+    	List<HibernateModel> rep = null;
+    	
+    	Class classe = model.getClass();
+    	Field [] fields = classe.getDeclaredFields();
+   	
+    	HashMap<String, Object> listFields = new HashMap<>();
+    	
+    	for(Field f:fields)
+    	{
+    		try
+			{
+    			f.setAccessible(true);
+    			if(f.get(model) != null)
+    			{
+    				listFields.put(f.getName(), f.get(model));
+    			}
+				
+			} 
+    		catch (Exception e)
+			{
+				
+				e.printStackTrace();
+			} 
+    	}
+    	
+    	Session session = getSessionFactory().getCurrentSession();
+    	try
+    	{
+    		Criteria crit = session.createCriteria(classe);
+    		 crit.add(Restrictions.allEq(listFields));
+    		
+    		rep = crit.list();
+    	}
+    	catch(Exception e)
+    	{
+    		e.printStackTrace();
+    	}
+    	
+    	 
+    	
+    	return rep;
+    	
+    }
     
     
     

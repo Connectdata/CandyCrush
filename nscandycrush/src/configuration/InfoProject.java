@@ -28,7 +28,7 @@ public class InfoProject {
         return SERVER.getDb().getIp();
     }
 	public static String getJDBCUrl(){
-        return "jdbc:"+InfoProject.getDatabaseType()+"://"+InfoProject.getDatabaseUrl()+";databaseName="+InfoProject.getDatabaseName();
+        return "jdbc:"+InfoProject.getDatabaseType()+"://"+InfoProject.getDatabaseUrl()+":3306/"+InfoProject.getDatabaseName();
     }
     public static String getDatabaseUser(){
         return SERVER.getDb().getUser();

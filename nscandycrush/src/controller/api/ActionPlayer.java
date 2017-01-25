@@ -3,6 +3,7 @@ package controller.api;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,11 @@ import configuration.InfoProject;
 import helper.DateHelper;
 import model.mapping.BestScore;
 import model.mapping.Player;
+import model.mapping.PlayerBonus;
+import model.mapping.PlayerBonusFull;
+import model.mapping.PlayerRankGame;
 import model.mapping.Session;
+import model.service.BonusService;
 import model.service.ClassicalService;
 import model.service.GameService;
 import model.service.PlayerService;
@@ -31,6 +36,8 @@ public class ActionPlayer
 	GameService gameService;
 	@Autowired
 	ClassicalService classicalService;
+	@Autowired
+	BonusService bonusService;
 	
 	@RequestMapping(value=API.PLAYER,method=RequestMethod.POST)
 	public @ResponseBody ResponseEntity createUser(@RequestParam(required=true)String nom,@RequestParam(required=false)String prenom,@RequestParam(required=false)String email,@RequestParam(required=false)String telephone,@RequestParam(required=false)String login,@RequestParam(required=false)String password,@RequestParam(required=false)String idfacebook) 
@@ -43,19 +50,19 @@ public class ActionPlayer
 		
 		
 		tmpPlayer.setNom(nom);
-		if(prenom!=null)
+		if(prenom!=null && prenom != "")
 		{
 			tmpPlayer.setPrenom(prenom);
 		}
-		if(email !=null)
+		if(email !=null && email != "")
 		{
 			tmpPlayer.setEmail(email);
 		}
-		if(telephone!=null)
+		if(telephone!=null && telephone != "")
 		{
 			tmpPlayer.setTelephone(telephone);
 		}
-		if(login!=null)
+		if(login!=null && login != "")
 		{
 			tmpPlayer.setLogin(login);
 		}
@@ -63,7 +70,7 @@ public class ActionPlayer
 		{
 			tmpPlayer.setLogin(tmpPlayer.getNom());
 		}
-		if(password!=null)
+		if(password!=null && password != "")
 		{
 			tmpPlayer.setPassword(password);
 		}
@@ -72,7 +79,7 @@ public class ActionPlayer
 			tmpPlayer.setPassword(InfoProject.USER_DEFAULT_PASSWORD);
 		}
 		
-		if(idfacebook!= null)
+		if(idfacebook!= null && idfacebook != "")
 		{
 			tmpPlayer.setIdFacebook(idfacebook);
 		}
@@ -110,47 +117,47 @@ public class ActionPlayer
 		tmpPlayer = playerService.getPlayer(tmpPlayer).get(0);
 		
 		
-		if(nom !=null)
+		if(nom !=null && nom != "")
 		{
 			tmpPlayer.setNom(nom);
 		}
 		
 		
 		
-		if(prenom!=null)
+		if(prenom!=null && prenom != "")
 		{
 			tmpPlayer.setPrenom(prenom);
 		}
 		
 		
-		if(email !=null)
+		if(email !=null &&  email!= "")
 		{
 			tmpPlayer.setEmail(email);
 		}
 		
 		
 		
-		if(telephone!=null)
+		if(telephone!=null&& telephone!= "")
 		{
 			tmpPlayer.setTelephone(telephone);
 		}
 		
 		
 		
-		if(login!=null)
+		if(login!=null && login != "")
 		{
 			tmpPlayer.setLogin(login);
 		}
 		
 		
-		if(password!=null)
+		if(password!=null && password != "")
 		{
 			tmpPlayer.setPassword(password);
 		}
 		
 		
 		
-		if(idfacebook!= null)
+		if(idfacebook!= null && idfacebook != "")
 		{
 			tmpPlayer.setIdFacebook(idfacebook);
 		}
@@ -199,7 +206,7 @@ public class ActionPlayer
 	
 	
 	@RequestMapping(value=API.PLAYERS_BEST_SCORE)
-	public @ResponseBody ResponseEntity<LeaderBoardScore> BestUser(@RequestParam(required = true)Long idplayer,@RequestParam(required = false)Integer limit)
+	public @ResponseBody ResponseEntity<LeaderBoardScore> BestUser(@RequestParam(required = true)Long idplayer,@RequestParam(required = true)Long idgametype,@RequestParam(required = false)Integer limit)
 	{
 		
 		if(limit == null)
@@ -207,8 +214,8 @@ public class ActionPlayer
 			limit = -1;
 		}
 		
-		List<BestScore> resp = playerService.getTopBestPlayer(limit);
-		BestScore pBS = playerService.getPlayerBestScore(idplayer);
+		List<PlayerRankGame> resp = playerService.getTopBestPlayer(limit,idgametype);
+		PlayerRankGame pBS = playerService.getPlayerBestScoreInSpecificGame(idplayer,idgametype);
 		
 		LeaderBoardScore leaderboard = new LeaderBoardScore(resp, pBS);
 		return new ResponseEntity<LeaderBoardScore>(leaderboard,HttpStatus.OK);
@@ -217,56 +224,18 @@ public class ActionPlayer
 		
 	}
 	
-	
-	
-	public class LeaderBoardScore
-	{
-		private List<BestScore> topPlayers;
-		private BestScore player;
-		public List<BestScore> getTopPlayers() {
-			return topPlayers;
-		}
-		public void setTopPlayers(List<BestScore> topPlayers) {
-			this.topPlayers = topPlayers;
-		}
-		public BestScore getPlayer() {
-			return player;
-		}
-		public void setPlayer(BestScore player) {
-			this.player = player;
-		}
-		public LeaderBoardScore(List<BestScore> topPlayers, BestScore player) {
-			super();
-			this.topPlayers = topPlayers;
-			this.player = player;
-		}
-		@Override
-		public String toString() {
-			return "LeaderBoardScore [topPlayers=" + topPlayers + ", players=" + player + "]";
-		}
 		
-		
-		
-		
-	}
-	
-	
 	
 	@RequestMapping(value=API.PLAYER_SESSION,method=RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Player> createSession(@RequestParam(required=true)Long idplayer,@RequestParam(required=true)String date,@RequestParam(required=true)Integer score) 
+	public @ResponseBody ResponseEntity<Player> createSession(@RequestParam(required=true)Long idplayer,@RequestParam(required=true)Integer score) 
 	{
 		
 		
 		
-		System.out.println("DATE : "+date);
+		
 		
 		Session session =  new Session();
-		try {
-			session.setDate(DateHelper.getDate(date));
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
+		
 		session.setIdPlayer(idplayer);
 		session.setScore(score);
 		
@@ -289,6 +258,80 @@ public class ActionPlayer
 			return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
+		
+		
+		
+		
+	}
+	
+
+	
+	@RequestMapping(value=API.PLAYER_BONUS,method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<PlayerBonusFull>> getAllPlayerBonus(@RequestParam(required=true)Long idplayer) 
+	{
+		
+		
+		
+		List<PlayerBonusFull> resp = bonusService.getPlayerBonus(idplayer);
+		
+		return new ResponseEntity<List<PlayerBonusFull>>(resp,HttpStatus.OK);
+
+	}
+	
+	
+	@RequestMapping(value=API.PLAYER_BONUS_USE,method=RequestMethod.POST)
+	public @ResponseBody ResponseEntity<PlayerBonus> useBonus(@RequestParam(required = true)Long idplayer,@RequestParam(required = true)Long idbonus)
+	{
+		
+		
+		PlayerBonus resp = bonusService.takePlayerBonus(idplayer, idbonus);
+		
+		
+		if(resp!=null)
+		{
+			return new ResponseEntity<PlayerBonus>(resp,HttpStatus.OK);
+		}
+		else
+		{
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+		
+	}
+	
+	
+	
+	public class LeaderBoardScore
+	{
+		private List<PlayerRankGame> topPlayers;
+		private PlayerRankGame player;
+		public List<PlayerRankGame> getTopPlayers() {
+			return topPlayers;
+		}
+		public void setTopPlayers(List<PlayerRankGame> topPlayers) {
+			this.topPlayers = topPlayers;
+		}
+		public PlayerRankGame getPlayer() {
+			return player;
+		}
+		public void setPlayer(PlayerRankGame player) {
+			this.player = player;
+		}
+		public LeaderBoardScore() {
+			super();
+		}
+		@Override
+		public String toString() {
+			return "LeaderBoardScore [topPlayers=" + topPlayers + ", player=" + player + "]";
+		}
+		public LeaderBoardScore(List<PlayerRankGame> topPlayers, PlayerRankGame player) {
+			super();
+			this.topPlayers = topPlayers;
+			this.player = player;
+		}
+		
+		
 		
 		
 		

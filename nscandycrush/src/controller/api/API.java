@@ -8,5 +8,11 @@ public final class API
 	public static final String PLAYER_EDIT = API_ROOT+"/player/edit";
 	public static final String PLAYERS_BEST_SCORE = API_ROOT+"/players/bestscore";
 	public static final String PLAYER_SESSION = API_ROOT+"/player/session";
+	public static final String PLAYER_BONUS = API_ROOT+"/player/bonus";
+	public static final String PLAYER_BONUS_USE = API_ROOT+"/player/bonus/use";
+	
+	
+	
+	public static final String BONUS = API_ROOT+"/bonus";
 
 }

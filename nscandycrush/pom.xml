@@ -79,6 +79,12 @@
 			<artifactId>commons-net</artifactId>
 			<version>3.5</version>
 		</dependency>
+		
+		<dependency>
+    		<groupId>commons-beanutils</groupId>
+    		<artifactId>commons-beanutils</artifactId>
+    	<version>1.6</version>
+</dependency>
  	
   
   <!-- Depedance hibernate -->
@@ -195,6 +201,13 @@
   		<artifactId>visualization-datasource</artifactId>
   		<version>1.1.1</version>
   	</dependency>
+  	
+  	<!-- Dependence mysql -->
+  	<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>5.1.6</version>
+	</dependency>
 	
 </dependencies>
   

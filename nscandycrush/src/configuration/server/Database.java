@@ -6,7 +6,7 @@ public class Database extends Entity
     private String databaseName;
     public Database(String ip,String user,String password){
         super(ip,user,password);
-        setDatabaseType("sqlserver");
+        setDatabaseType("mysql");
         setDatabaseName("candycrush");
     }
     public String getDatabaseType()

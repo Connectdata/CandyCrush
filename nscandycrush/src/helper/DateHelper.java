@@ -1,10 +1,12 @@
 package helper;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import com.ibm.icu.text.DateFormat;
+import com.ibm.icu.text.SimpleDateFormat;
 
 public class DateHelper {
 	public static String getMonth(int month){
@@ -71,7 +73,7 @@ public class DateHelper {
 	
 	
 	public static Date getDate(String date) throws ParseException{
-	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    DateFormat format = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
 	    return format.parse(date);
 	    
 	}
