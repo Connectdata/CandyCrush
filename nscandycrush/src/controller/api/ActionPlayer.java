@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import configuration.InfoProject;
 import helper.DateHelper;
 import model.mapping.BestScore;
+import model.mapping.LeaderBoard;
 import model.mapping.Player;
 import model.mapping.PlayerBonus;
 import model.mapping.PlayerBonusFull;
@@ -293,9 +294,24 @@ public class ActionPlayer
 		}
 		else
 		{
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 		
+		
+		
+	}
+	
+	
+	
+	@RequestMapping(value=API.LEADERBOARD,method=RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<LeaderBoard>> leaderboard()
+	{
+		
+		
+		List<LeaderBoard> resp = gameService.getAllFirstGame();
+		
+		
+		return new ResponseEntity<List<LeaderBoard>>(resp, HttpStatus.OK);		
 		
 		
 	}

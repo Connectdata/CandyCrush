@@ -76,9 +76,10 @@ public class BonusService
 			{
 				pb.setNumber(pb.getNumber()-1);
 				getDAO().update(pb);
+				resp = pb;
 				
 			}
-			resp = pb;
+			
 		}
 		catch(Exception e)
 		{

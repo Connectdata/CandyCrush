@@ -32,7 +32,7 @@ public class ActionBonus
 	
 	
 	@RequestMapping(value=API.BONUS,method=RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Bonus>> getAllPlayerBonus(@RequestParam(required=false)Long idbonus) 
+	public @ResponseBody ResponseEntity <List<Bonus>> getAllPlayerBonus(@RequestParam(required=false)Long idbonus) 
 	{
 		
 		if(idbonus == null|| idbonus<=0)
